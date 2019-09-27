@@ -75,14 +75,18 @@ class LSTEventSource(EventSource):
             path, name = os.path.split(os.path.abspath(self.input_url))
             if 'Run' in name:
                 stream, run = name.split('Run', 1)
+                run1, subrun, temp1, temp2 = run.split('.',3 )
             else:
                 run = name
-
+            print(stream, run)
+            print(run1, subrun, temp1, temp2)
+            runnum='Run'+run1
+            print(runnum)
             ls = listdir(path)
             self.file_list = []
 
             for file_name in ls:
-                if run in file_name:
+                if runnum in file_name:
                     full_name = os.path.join(path,file_name)
                     self.file_list.append(full_name)
 
@@ -97,6 +101,8 @@ class LSTEventSource(EventSource):
                 self.multi_file.num_inputs()
             )
         )
+
+
 
     def rewind(self):
         self.multi_file.rewind()
